@@ -1,6 +1,5 @@
 fastapi
 uvicorn
-langchain
-langchain_community
-openai
 boto3
+python-dotenv
+requests

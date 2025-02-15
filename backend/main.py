@@ -43,6 +43,9 @@ logging.getLogger('s3transfer').setLevel(logging.WARNING)
 logging.getLogger('urllib3').setLevel(logging.WARNING)
 logging.getLogger('openai').setLevel(logging.WARNING)
 
+# Add this after the FastAPI app initialization
+FRONTEND_URL = os.getenv("FRONTEND_URL", "https://careercouchai.streamlit.app")
+
 class Question(BaseModel):
     question: str
 
@@ -114,7 +117,7 @@ async def onboard_user(data: OnboardingData):
         aws_helper.send_email(
             data.email,
             'Welcome to AI Career Adviser',
-            f"Hello {data.name},\n\nWelcome to AI Career Adviser! Click the link below to start your journey:\n\nhttp://localhost:8000?sessionid={session_id}\n\nBest,\nAI Career Adviser Team"
+            f"Hello {data.name},\n\nWelcome to AI Career Adviser! Click the link below to start your journey:\n\n{FRONTEND_URL}?sessionid={session_id}\n\nBest,\nAI Career Adviser Team"
         )
         Logger.log_success(f"Onboarded user: {data.email} with session ID: {session_id}")
         return {"message": "Onboarding successful"}
@@ -135,7 +138,7 @@ async def check_user(request: CheckUserRequest):
             aws_helper.send_email(
                 email,
                 'Your Login Link for AI Career Adviser',
-                f"Hello,\n\nClick the link below to log in:\n\nhttp://localhost:8000?sessionid={session_id}\n\nBest,\nAI Career Adviser Team"
+                f"Hello,\n\nClick the link below to log in:\n\n{FRONTEND_URL}?sessionid={session_id}\n\nBest,\nAI Career Adviser Team"
             )
             Logger.log_success(f"Sent login link to user: {email}")
             return {"onboarded": True, "user_id": user_id}
