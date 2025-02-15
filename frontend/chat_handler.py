@@ -1,15 +1,17 @@
 import requests
 import streamlit as st
+from config import BACKEND_URL
 
 class ChatHandler:
     """Handles chat interactions and API requests."""
     def __init__(self, session_manager):
         self.session_manager = session_manager
+        self.base_url = BACKEND_URL
 
     def validate_session(self, session_id):
         try:
             response = requests.post(
-                "http://aica-backend:8000/validate_session",
+                f"{self.base_url}/validate_session",
                 json={"session_id": session_id},
                 timeout=30
             )
@@ -22,24 +24,20 @@ class ChatHandler:
             st.error(f"An error occurred: {e}")
             return {"valid": False}
 
-    def send_question(self, user_id, conversation_id, question):
+    def send_question(self, question, user_id, conversation_id):
         try:
-            headers = {
-                "user_id": user_id,
-                "conversation_id": conversation_id
-            }
             response = requests.post(
-                "http://aica-backend:8000/ask",
+                f"{self.base_url}/ask",
+                headers={
+                    "user_id": user_id,
+                    "conversation_id": conversation_id
+                },
                 json={"question": question},
-                headers=headers,
                 timeout=30
             )
-            response_data = response.json()
-            if "answer" in response_data:
-                return response_data['answer']
-            else:
-                return "Sorry, I couldn't understand that."
+            return response.json()["answer"]
         except requests.exceptions.JSONDecodeError:
             return "Error: Received a non-JSON response from the server."
         except requests.exceptions.RequestException as e:
-            return f"An error occurred: {e}" 
+            st.error(f"Error sending question: {e}")
+            return "Sorry, I'm having trouble connecting to the server." 
