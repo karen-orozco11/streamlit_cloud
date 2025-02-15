@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  aica-web:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    image: aica-web:latest
+    ports:
+      - "8000:8501"
+    environment:
+      - PYTHONUNBUFFERED=1  # This ensures Python output is sent straight to terminal
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    depends_on:
+      - aica-backend
+
+  aica-backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    image: aica-backend:latest
+    ports:
+      - "8001:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+    depends_on:
+      - aica-agents
+
+  aica-agents:
+    build:
+      context: .
+      dockerfile: agents/Dockerfile
+    image: aica-agents:latest
+    ports:
+      - "8002:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}

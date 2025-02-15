@@ -1,0 +1,21 @@
+[server]
+enableCORS = false
+headless = true
+
+[theme]
+base = "light"
+primaryColor = "#007bff"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f8f9fa"
+textColor = "#212529"
+
+[client]
+toolbarMode = "minimal"
+
+[browser]
+gatherUsageStats = false
+
+[ui]
+hideMenu = true
+hideFooter = true
+hideSidebarNav = true 

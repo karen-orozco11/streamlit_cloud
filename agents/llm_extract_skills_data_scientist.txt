@@ -1,0 +1,74 @@
+**Resume Skill Extraction Prompt**
+
+**Instructions:**  
+1. Extract key skills and competencies explicitly mentioned in the resume, as well as those inferred from experience, tools, technologies, and industry-specific terminology.  
+2. Provide a concise yet informative description for each skill, explaining its relevance, application, and proficiency level if implied.  
+3. Categorize skills into relevant types (e.g., Technical, Managerial, Industry-Specific, Soft Skills) where applicable.  
+4. Ensure accuracy and consistency in identifying skills, avoiding redundancy or overly broad terms.  
+5. Output the results in the structured JSON format below.  
+
+**Output Format (JSON):**  
+```json
+{
+  "skills": [
+    {
+      "name": "Skill Name",
+      "category": "Technical/Managerial/Industry-Specific/Soft Skill",
+      "description": "Brief but meaningful description of the skill and its relevance."
+    },
+    ...
+  ]
+}
+```
+
+**Example Output for a Data Scientist Resume:**  
+```json
+{
+  "skills": [
+    {
+      "name": "Machine Learning",
+      "category": "Technical",
+      "description": "Experience in developing and optimizing machine learning models using libraries such as Scikit-learn, TensorFlow, and PyTorch."
+    },
+    {
+      "name": "Data Wrangling",
+      "category": "Technical",
+      "description": "Expertise in cleaning, transforming, and preparing large datasets for analysis using Pandas and SQL."
+    },
+    {
+      "name": "Statistical Analysis",
+      "category": "Technical",
+      "description": "Proficient in applying statistical methods such as hypothesis testing, regression analysis, and probability distributions."
+    },
+    {
+      "name": "Big Data Technologies",
+      "category": "Technical",
+      "description": "Experience working with big data tools such as Apache Spark, Hadoop, and cloud-based data warehouses like AWS Redshift."
+    },
+    {
+      "name": "Data Visualization",
+      "category": "Technical",
+      "description": "Ability to create compelling visualizations using Matplotlib, Seaborn, and Tableau to convey insights effectively."
+    },
+    {
+      "name": "Project Management",
+      "category": "Managerial",
+      "description": "Experience leading data science projects, collaborating with cross-functional teams, and managing timelines effectively."
+    },
+    {
+      "name": "Business Intelligence",
+      "category": "Industry-Specific",
+      "description": "Ability to interpret and present data-driven insights that support business decision-making."
+    },
+    {
+      "name": "Communication Skills",
+      "category": "Soft Skill",
+      "description": "Strong ability to explain complex data concepts to non-technical stakeholders."
+    }
+  ]
+}
+```
+
+**Resume Text:**  
+{resume}
+
